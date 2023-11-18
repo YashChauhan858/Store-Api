@@ -8,6 +8,7 @@ export function createRandomUser() {
     productName: faker.internet.userName(),
     company: ["A", "B", "C"][Math.floor(Math.random() * 4)],
     rating: faker.number.int({ max: 10, min: 0 }),
+    price: faker.number.int({ max: 50000, min: 200 }),
     feature: faker.lorem.sentence(),
   };
 }
