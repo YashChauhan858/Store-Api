@@ -27,9 +27,9 @@ or either exclude certain fields like
 
 #### User can also opt to use numeric filter
 
-- /api/v1/products?numericFilter=pice>30000,rating<10
+- /api/v1/products?numericFilter=price>30000,rating<10
 
-#### User can alos opt to sort according to any field mentioned above
+#### User can also opt to sort according to any field mentioned above
 
 - /api/v1/products?sort=productName (From A to Z)
 - /api/v1/products?sort=-productName (From Z to A)
