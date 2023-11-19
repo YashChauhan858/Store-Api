@@ -47,7 +47,9 @@ export const getAllProducts = async (req, res, next) => {
           numericFilter = numericFilter.replace(op, `-${operatorMap[op]}-`);
         }
       });
+      // valid allowed fields
       let options = ["price", "rating"];
+      // inserting records in filterObject
       numericFilter.split(",").forEach((filter) => {
         let [field, operator, value] = filter.split("-");
         if (options.includes(field)) {
