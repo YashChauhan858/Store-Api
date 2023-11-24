@@ -1,0 +1,21 @@
+version: "3"
+services:
+  node-app:
+    build:
+      context: .
+    image: store-api
+    container_name: store-api-container
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  redis:
+    build:
+      context: .
+      dockerfile: redis.Dockerfile
+    image: redis-image
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+      - "8001:8001"
