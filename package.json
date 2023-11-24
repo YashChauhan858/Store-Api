@@ -8,7 +8,8 @@
     "start": "nodemon server.js",
     "buildImage": "docker build -t store_api .",
     "runContainer": "docker run -p 3000:3000 --name store_api_container store_api",
-    "runRedis": "docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest"
+    "buildRedis": "docker build -t redis_image . -f Dockerfile.redis",
+    "runRedis": "docker run -d -p 6379:6379 -p 8001:8001 --name redis-stack redis_image"
   },
   "keywords": [],
   "author": "",
