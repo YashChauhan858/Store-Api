@@ -33,3 +33,14 @@ or either exclude certain fields like
 
 - /api/v1/products?sort=productName (From A to Z)
 - /api/v1/products?sort=-productName (From Z to A)
+
+#### Docker
+
+This project got two separate docker container 
+
+- one for node/express server ( EXPOSE 3000 )
+- one for redis server ( EXPOSE 6379/8001 )
+
+Perform communication between the redis container and node/express container
+
+It uses "docker compose up" command to spin up both container
