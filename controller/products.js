@@ -1,8 +1,8 @@
 import { Redis } from "ioredis";
 import productsModel from "../model/productsModel.js";
 
-// redis client: automatically hits port 6379
-const redis = new Redis();
+// redis client: host key ref to the docker container named redis-container
+const redis = new Redis({ host: "redis-container" });
 
 export const getAllProducts = async (req, res, next) => {
   try {
