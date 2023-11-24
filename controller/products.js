@@ -1,4 +1,8 @@
+import { Redis } from "ioredis";
 import productsModel from "../model/productsModel.js";
+
+// redis client: automatically hits port 6379
+const redis = new Redis();
 
 export const getAllProducts = async (req, res, next) => {
   try {
@@ -12,6 +16,17 @@ export const getAllProducts = async (req, res, next) => {
       fields,
       numericFilter,
     } = req.query;
+
+    // Creating redis key to find / create data by
+    let redisKey = JSON.stringify(req.query);
+    // Fetching data from redis
+    const cachedData = await redis.get(redisKey);
+    // Returning data from redis if present and ending req-res cycle
+    if (cachedData)
+      return res.status(200).json({
+        data: JSON.parse(cachedData),
+        count: JSON.parse(cachedData).length,
+      });
 
     const filterObject = {};
 
@@ -85,6 +100,12 @@ export const getAllProducts = async (req, res, next) => {
     result = result.skip(skip).limit(limit);
 
     let data = await result;
+
+    // Storing data in redis with key according to the stringified query parameters
+    await redis.set(redisKey, JSON.stringify(data));
+    // Setting expiry time on the key ( 10 seconds )
+    await redis.expire(redisKey, 10);
+
     res.status(200).json({ data, count: data.length });
   } catch (error) {
     next(error);
