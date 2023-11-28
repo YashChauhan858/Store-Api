@@ -1,8 +1,26 @@
 import { Redis } from "ioredis";
 import productsModel from "../model/productsModel.js";
 
-// redis client: host key ref to the docker container named redis-container
-const redis = new Redis({ host: "redis-container" });
+const connectRedis = () => {
+  try {
+    const redis = new Redis({
+      host: "redis-container",
+      // Problem with below code is once there are no more retries left
+      // all my redis.get/set calls in api request will throw error
+      // retryStrategy: (e) => {
+      //   // Closes connection after 10 tries
+      //   if (e >= 10) return null;
+      //   return 2000;
+      // },
+    });
+
+    return redis;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const redis = connectRedis();
 
 export const getAllProducts = async (req, res, next) => {
   try {
